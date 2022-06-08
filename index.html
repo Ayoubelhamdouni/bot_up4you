@@ -1,57 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartClub</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <link rel="stylesheet" href="CSS/style.css">
-    <link rel="icon" href="icons/clipart3378153.png">
+
+
+<form method="POST" enctype="multipart/form-data">
+ <input type="file" name="file" id="file"/>
+<button type="submit" name="send">ارسال</button>
+</form>
+
+<?php
+
+if(isset($_POST['send'])){
+ 
+ 
+ if(isset($_FILES["file"])){
+     $file_name = $_FILES["file"]["name"];
+     $file_size = $_FILES["file"]["size"];
+     $tmp_file = $_FILES["file"]["tmp_name"];
+     $ext = explode(".",$file_name);
+     $extension = end($ext);
+     $array_extentions = array("png","jpg","gif","rar","apk","exe","pdf","ppl","mp3","mp4");
+     $target = "uploads/";
+     $error ="";
+     
+     if(!in_array($extension,$array_extentions)){
+         $error = "error 1";
+     }
+     
+     
+     
+     //------------------------  size 20MB    حجم الملف المسموح برفعه  ----------------------------
+     if($file_size > 20971520){             
+         $error .= "error 2 <br>";
+     }
+     //---------------------------------------------------------------------------------------------
+
+
+
+
+     if(empty($error)){
+         move_uploaded_file($tmp_file,$target.$file_name);
+         echo "تم الرفع بنجاح";
+     }else{
+         echo $error;
+     }
+
+
     
-    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <section class="home" id="home">
-        <nav>
-            
-            <button id="menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+ }
 
-            <h2>Smart<span>Club</span></h2>
-            <ul id="actions">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Clubs</a></li>
-                <li><a href="#">Online Services</a></li>
-                <li><a href="#">Contact Me</a></li>
-            </ul>
-            <a href="#" class="btn">Subscribe</a>
-        </nav>
+}
+  
+?>
 
 
-
-        <div class="content">
-            <div class="container-texts">
-                <h1>Hello Student</h1>
-                <h3>Welcome to the digital space of university clubs</h3>
-                <h4>You can access all the digital services provided by the clubs through this website
-                </h3>
-            </div>
-
-            <div class="container-images">
-                <img src="images/Group discussion-rafiki.png" alt="" class="shape">
-                <img src="" alt="" class="mypic">
-            </div>
-        </div>
-
-
-
-
-    </section>
-    <script src="js/script.js"></script>
-</body>
-</html>
